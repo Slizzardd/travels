@@ -1,7 +1,7 @@
 package ua.com.alevel.persistence.repository.user;
 
 import org.springframework.stereotype.Repository;
-import ua.com.alevel.persistence.entity.users.BaseUser;
+import ua.com.alevel.persistence.entity.user.BaseUser;
 import ua.com.alevel.persistence.repository.BaseRepository;
 
 @Repository

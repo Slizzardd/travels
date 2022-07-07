@@ -16,12 +16,9 @@ public abstract class BaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
 
-    private Boolean visible;
-
     public BaseEntity() {
         this.created = new Date();
         this.updated = new Date();
-        this.visible = true;
     }
 
     @PreUpdate
@@ -51,13 +48,5 @@ public abstract class BaseEntity {
 
     public void setUpdated(Date updated) {
         this.updated = updated;
-    }
-
-    public Boolean getVisible() {
-        return visible;
-    }
-
-    public void setVisible(Boolean visible) {
-        this.visible = visible;
     }
 }

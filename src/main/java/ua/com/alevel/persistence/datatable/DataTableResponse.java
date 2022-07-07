@@ -78,4 +78,17 @@ public class DataTableResponse<E extends BaseEntity> {
     public void setTotalPageSize(int totalPageSize) {
         this.totalPageSize = totalPageSize;
     }
+
+    @Override
+    public String toString() {
+        return "DataTableResponse{" +
+                ", pageSize=" + pageSize +
+                ", totalPageSize=" + totalPageSize +
+                ", itemsSize=" + itemsSize +
+                ", sort='" + sort + '\'' +
+                ", order='" + order + '\'' +
+                ", items=" + items +
+                ", otherParamMap=" + otherParamMap +
+                '}';
+    }
 }

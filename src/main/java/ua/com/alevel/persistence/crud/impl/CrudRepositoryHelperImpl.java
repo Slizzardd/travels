@@ -5,8 +5,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Transactional;
 import ua.com.alevel.exception.EntityNotFoundException;
 import ua.com.alevel.persistence.crud.CrudRepositoryHelper;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
@@ -25,70 +23,49 @@ public class CrudRepositoryHelperImpl<
         implements CrudRepositoryHelper<E, R> {
 
     @Override
-    @Transactional(isolation = Isolation.REPEATABLE_READ)
     public void create(R repository, E entity) {
         repository.save(entity);
     }
 
     @Override
-    @Transactional(isolation = Isolation.REPEATABLE_READ)
     public void update(R repository, E entity) {
         checkExist(repository, entity.getId());
         repository.save(entity);
     }
 
     @Override
-    @Transactional(isolation = Isolation.REPEATABLE_READ)
     public void delete(R repository, Long id) {
         checkExist(repository, id);
         repository.deleteById(id);
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Optional<E> findById(R repository, Long id) {
         checkExist(repository, id);
         return repository.findById(id);
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public DataTableResponse<E> findAll(R repository, DataTableRequest dataTableRequest) {
-        int size = dataTableRequest.getSize();
-        int page = 0;
-        String sortBy = dataTableRequest.getSort();
-        String orderBy = dataTableRequest.getOrder();
+    public DataTableResponse<E> findAll(R repository, DataTableRequest request) {
+        RequestHelper requestHelper = new RequestHelper();
+        requestFill(requestHelper, request);
 
-        Sort sort = orderBy.equals("desc")
-                ? Sort.by(sortBy).descending()
-                : Sort.by(sortBy).ascending();
-        PageRequest pageRequest = PageRequest.of(page, size, sort);
+        Page<E> pageEntity = repository.findAll(requestHelper.pageRequest);
 
-        Page<E> pageEntity = repository.findAll(pageRequest);
-
-        return generateDataTableResponse(pageEntity, sortBy, orderBy, dataTableRequest);
+        return generateDataTableResponse(pageEntity, requestHelper, request);
     }
 
-    @Override//TODO ИСПРАВИТЬ НАХУ БЛЯТЬ
-    @Transactional(readOnly = true)
-    public DataTableResponse<E> findAll(R repository, DataTableRequest dataTableRequest, Class<E> entityClass) {
-        System.out.println("CrudRepositoryHelperImpl.findAll");
-        int size = dataTableRequest.getSize();
-        int page = 0;
-        String sortBy = dataTableRequest.getSort();
-        String orderBy = dataTableRequest.getOrder();
-
-        Sort sort = orderBy.equals("desc")
-                ? Sort.by(sortBy).descending()
-                : Sort.by(sortBy).ascending();
-        PageRequest pageRequest = PageRequest.of(page, size, sort);
+    @Override
+    public DataTableResponse<E> findAll(R repository, DataTableRequest request, Class<E> entityClass) {
+        RequestHelper requestHelper = new RequestHelper();
+        requestFill(requestHelper, request);
 
         SearchSpecification<E> searchSpecification = new SearchSpecificationProcess<>();
-        Specification<E> specification = searchSpecification.generateSpecification(dataTableRequest, entityClass);
+        Specification<E> specification = searchSpecification.generateSpecification(request, entityClass);
 
-        Page<E> pageEntity = repository.findAll(specification, pageRequest);
+        Page<E> pageEntity = repository.findAll(specification, requestHelper.pageRequest);
 
-        return generateDataTableResponse(pageEntity, sortBy, orderBy, dataTableRequest);
+        return generateDataTableResponse(pageEntity, requestHelper, request);
     }
 
     private void checkExist(R repository, Long id) {
@@ -97,18 +74,43 @@ public class CrudRepositoryHelperImpl<
         }
     }
 
+    private void requestFill(RequestHelper requestHelper, DataTableRequest dataTableRequest) {
+        requestHelper.size = dataTableRequest.getSize();
+        requestHelper.sortBy = dataTableRequest.getSort();
+        requestHelper.orderBy = dataTableRequest.getOrder();
+
+        requestHelper.sort = dataTableRequest.getOrder().equals("desc")
+                ? Sort.by(dataTableRequest.getSort()).descending()
+                : Sort.by(dataTableRequest.getSort()).ascending();
+
+        requestHelper.pageRequest = PageRequest.of(requestHelper.page, requestHelper.size, requestHelper.sort);
+    }
+
     private DataTableResponse<E> generateDataTableResponse(
             Page<E> pageEntity,
-            String sortBy,
-            String orderBy,
+            RequestHelper requestHelper,
             DataTableRequest dataTableRequest) {
         DataTableResponse<E> dataTableResponse = new DataTableResponse<>();
         dataTableResponse.setItemsSize(pageEntity.getTotalElements());
         dataTableResponse.setTotalPageSize(pageEntity.getTotalPages());
         dataTableResponse.setItems(pageEntity.getContent());
-        dataTableResponse.setOrder(orderBy);
-        dataTableResponse.setSort(sortBy);
+        dataTableResponse.setOrder(requestHelper.orderBy);
+        dataTableResponse.setSort(requestHelper.sortBy);
         dataTableResponse.setPageSize(dataTableRequest.getSize());
         return dataTableResponse;
+    }
+
+    private class RequestHelper {
+
+        private int size;
+        private final int page;
+        private String sortBy;
+        private String orderBy;
+        private Sort sort;
+        private PageRequest pageRequest;
+
+        public RequestHelper() {
+            this.page = 0;
+        }
     }
 }

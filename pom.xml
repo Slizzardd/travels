@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.1</version>
+        <version>2.6.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>ua.com.alevel</groupId>
@@ -25,6 +25,22 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
+    <distributionManagement>
+
+        <repository>
+            <id>releases</id>
+            <name>Releases</name>
+            <url>http://localHost:8080/repository/YourRepo/</url>
+        </repository>
+
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Snapshots</name>
+            <url>http://localHost:8080/repository/YourRepo/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+
     <dependencies>
         <!-- spring -->
         <dependency>
@@ -32,7 +48,11 @@
             <artifactId>spring-context-support</artifactId>
             <version>5.3.15</version>
         </dependency>
-
+        <!--Elastic-->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-elasticsearch</artifactId>
+        </dependency>
         <dependency>
             <groupId>nz.net.ultraq.thymeleaf</groupId>
             <artifactId>thymeleaf-layout-dialect</artifactId>
@@ -189,13 +209,21 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>9</source>
-                    <target>9</target>
+                    <source>16</source>
+                    <target>16</target>
                 </configuration>
             </plugin>
         </plugins>
