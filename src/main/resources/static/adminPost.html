@@ -6,9 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Travels for Ukraine</title>
-
     <link rel="stylesheet" href="/styles/styles.css">
-
 </head>
 <body>
 
@@ -17,6 +15,7 @@
         <a href="/" class="logo">
             <img src="/images/logo.svg" alt="logo">
         </a>
+
         <nav>
             <ul>
                 <li><a href="/">Travels</a></li>
@@ -36,11 +35,14 @@
                 </li>
             </ul>
         </nav>
+
     </div>
 </header>
 
 <main class="main">
+
     <h1 class="title">All posts</h1>
+
     <table class="table">
         <tr>
             <td><a href="/admin/users">Users</a></td>
@@ -51,6 +53,7 @@
     </table>
 
     <table class="table">
+
         <thead>
         <tr>
             <th>Id</th>
@@ -64,6 +67,7 @@
             <th>UserId</th>
         </tr>
         </thead>
+
         <tr th:each="post : ${posts.getItems()}">
             <td th:text="${post.getId()}"></td>
             <td th:text="${post.getCreated()}"></td>
@@ -75,9 +79,9 @@
             <td th:text="${post.getPathToImage()}"></td>
             <td th:text="${post.getUserId()}"></td>
         </tr>
+
     </table>
+
 </main>
-
-
 </body>
 </html>

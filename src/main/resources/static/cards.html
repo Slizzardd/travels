@@ -10,11 +10,13 @@
     <script src="scripts/swiper.min.js"></script>
     <script src="scripts/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="/styles/styles.css">
-
 </head>
+
+
 <body class="body">
 
 <header class="header">
+
     <div class="container">
         <a href="/" class="logo">
             <img src="/images/logo.svg" alt="logo">
@@ -39,24 +41,26 @@
                 </li>
             </ul>
         </nav>
+
     </div>
 </header>
 
 <main class="main page__card">
-    <div class="container">
-        <div class="description">
-            <img th:src="${post.getPathToImage()}" alt="">
 
+    <div class="container">
+
+        <div class="description">
+
+            <img th:src="${post.getPathToImage()}" alt="">
             <div class="description__text">
                 <h1 th:text="${post.getName()}"></h1>
                 <p th:text="${post.getDescription()}"></p>
-
                 <ul>
                     <li th:text="${post.getPrice()}"></li>
                 </ul>
             </div>
-        </div>
 
+        </div>
 
         <div class="feedback-form">
             <form>
@@ -65,7 +69,6 @@
                 <button>Send feedback</button>
             </form>
         </div>
-
 
         <div class="feedback">
             <div class="feed">
@@ -109,10 +112,5 @@
         </div>
     </div>
 </footer>
-
-
 </body>
 </html>
-<body>
-
-</body>

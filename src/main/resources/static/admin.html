@@ -6,10 +6,10 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Travels for Ukraine</title>
-
     <link rel="stylesheet" href="/styles/styles.css">
-
 </head>
+
+
 <body>
 
 <header class="header">
@@ -37,6 +37,7 @@
                 </li>
             </ul>
         </nav>
+
     </div>
 </header>
 
@@ -49,7 +50,9 @@
             <td><a href="/admin/posts">Posts</a></td>
         </tr>
     </table>
+
     <table class="table">
+
         <thead>
         <tr>
             <th>Id</th>
@@ -64,6 +67,7 @@
             <th>Email</th>
         </tr>
         </thead>
+
         <tr th:each="customer : ${customers.getItems()}">
             <td th:text="${customer.getId()}"></td>
             <td th:text="${customer.getCreated()}"></td>
@@ -76,9 +80,9 @@
             <td th:text="${customer.getPoints()}"></td>
             <td th:text="${customer.getEmail()}"></td>
         </tr>
+
     </table>
+
 </main>
-
-
 </body>
 </html>
