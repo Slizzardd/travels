@@ -22,29 +22,34 @@ public class CrudRepositoryHelperImpl<
         R extends BaseRepository<E>>
         implements CrudRepositoryHelper<E, R> {
 
+//    Занос ентити в базу
     @Override
     public void create(R repository, E entity) {
         repository.save(entity);
     }
 
+//    Обновление ентити в базе
     @Override
     public void update(R repository, E entity) {
         checkExist(repository, entity.getId());
         repository.save(entity);
     }
 
+//    Удаление энтити из базы
     @Override
     public void delete(R repository, Long id) {
         checkExist(repository, id);
         repository.deleteById(id);
     }
 
+//    Поиск ентити по ИД
     @Override
     public Optional<E> findById(R repository, Long id) {
         checkExist(repository, id);
         return repository.findById(id);
     }
 
+//    Поиск всех ентити без спецификаций(в вашей проге только это и исспользуется, 2 файдалл вам не нужен
     @Override
     public DataTableResponse<E> findAll(R repository, DataTableRequest request) {
         RequestHelper requestHelper = new RequestHelper();
@@ -55,6 +60,7 @@ public class CrudRepositoryHelperImpl<
         return generateDataTableResponse(pageEntity, requestHelper, request);
     }
 
+//    Забейте
     @Override
     public DataTableResponse<E> findAll(R repository, DataTableRequest request, Class<E> entityClass) {
         RequestHelper requestHelper = new RequestHelper();
@@ -68,12 +74,14 @@ public class CrudRepositoryHelperImpl<
         return generateDataTableResponse(pageEntity, requestHelper, request);
     }
 
+//    Проверка, есть ли такой ентити уже в БЛ
     private void checkExist(R repository, Long id) {
         if (!repository.existsById(id)) {
             throw new EntityNotFoundException("this entity is not found");
         }
     }
 
+//    Заполнение запроса для БД
     private void requestFill(RequestHelper requestHelper, DataTableRequest dataTableRequest) {
         requestHelper.size = dataTableRequest.getSize();
         requestHelper.sortBy = dataTableRequest.getSort();
@@ -86,6 +94,7 @@ public class CrudRepositoryHelperImpl<
         requestHelper.pageRequest = PageRequest.of(requestHelper.page, requestHelper.size, requestHelper.sort);
     }
 
+//    Заполнение ответа из БД для файндАлл
     private DataTableResponse<E> generateDataTableResponse(
             Page<E> pageEntity,
             RequestHelper requestHelper,
@@ -100,7 +109,8 @@ public class CrudRepositoryHelperImpl<
         return dataTableResponse;
     }
 
-    private class RequestHelper {
+//    Класс для помощи заполнения запроса
+    private static class RequestHelper {
 
         private int size;
         private final int page;

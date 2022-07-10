@@ -28,6 +28,7 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
+    //Поиск поста по id
     public String findById(@PathVariable Long id, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         PostResponseDto postResponseDto = postFacade.findById(id);

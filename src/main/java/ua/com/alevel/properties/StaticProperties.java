@@ -2,7 +2,6 @@ package ua.com.alevel.properties;
 
 public final class StaticProperties {
 
-    public static final String SITE_NAME = "http://localhost:8080";
-
+//    Путь до проекта в ПК(задать самому)
     public static final String PATH_PROJECT = "C:/D/codes/travels_site";
 }

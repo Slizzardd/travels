@@ -30,19 +30,19 @@ public class UserFacadeImpl implements UserFacade {
         this.postService = postService;
     }
 
-    @Override
+    @Override//Преобразование UserRequestDto в BaseUser
     public void create(UserRequestDto userRequestDto) {
-        BaseUser customer = new UserCustomer();
-        customer.setEmail(userRequestDto.getEmail());
-        customer.setLogin(userRequestDto.getLogin());
-        customer.setPassword(userRequestDto.getPassword());
-        customer.setFirstName(userRequestDto.getFirstName());
-        customer.setPhoneNumber(userRequestDto.getPhoneNumber());
-        customer.setLastName(userRequestDto.getLastName());
-        userService.create(customer);
+        BaseUser user = new UserCustomer();
+        user.setEmail(userRequestDto.getEmail());
+        user.setLogin(userRequestDto.getLogin());
+        user.setPassword(userRequestDto.getPassword());
+        user.setFirstName(userRequestDto.getFirstName());
+        user.setPhoneNumber(userRequestDto.getPhoneNumber());
+        user.setLastName(userRequestDto.getLastName());
+        userService.create(user);
     }
 
-    @Override
+    @Override//Реализовал просто так, но на UI этого нет.
     public void update(Long id, UserRequestDto userRequestDto) {
         BaseUser user = userService.findById(id).get();
         user.setEmail(userRequestDto.getEmail());
@@ -89,7 +89,7 @@ public class UserFacadeImpl implements UserFacade {
         return new UserResponseDto(userService.findByLogin(login));
     }
 
-    @Override
+    @Override //Добавление путешествия(при клике на buy)
     public void travelRegistration(Long postId, String emailUser) {
         BaseUser user = userService.findByEmail(emailUser);
         Post post = postService.findById(postId).get();

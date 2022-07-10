@@ -30,6 +30,7 @@ public class AdminController {
 
     @RequestMapping("/users")
     @PreAuthorize("hasAuthority('developers:write')")
+    //Поиск всех пользователей для админки
     public String findAll(Model model, WebRequest webRequest) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
@@ -44,6 +45,7 @@ public class AdminController {
 
     @RequestMapping("/posts")
     @PreAuthorize("hasAuthority('developers:write')")
+    //Поиск всех постов для админки
     public String findAllPosts(Model model, WebRequest webRequest) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
@@ -58,6 +60,7 @@ public class AdminController {
 
     @RequestMapping("/newPost")
     @PreAuthorize("hasAuthority('developers:write')")
+    //Создание нового поста
     public String createNewPost(Model model, WebRequest webRequest) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {

@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
         DataSourceTransactionManagerAutoConfiguration.class,
         HibernateJpaAutoConfiguration.class})
 public class TravelsApplication {
-
+//Главный класс для запуска программы
     public static void main(String[] args) {
         SpringApplication.run(TravelsApplication.class, args);
     }

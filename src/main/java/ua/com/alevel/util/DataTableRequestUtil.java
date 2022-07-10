@@ -8,6 +8,7 @@ import ua.com.alevel.web.dto.response.ResponseDto;
 
 public class DataTableRequestUtil {
 
+    //Помощь для заполенения запроса для findAll в бд
     public static PageData<? extends ResponseDto> initPageData(
             DataTableResponse<? extends BaseEntity> tableResponse) {
         PageData<? extends ResponseDto> pageData = new PageData<>();

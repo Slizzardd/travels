@@ -23,6 +23,7 @@ public class UserRestController {
     }
 
     @PostMapping(value = "/add_user")
+    //Регистрация нового пользователя
     public String addUser(@RequestBody UserRequestDto req) {
         try {
             userFacade.create(req);
@@ -35,7 +36,8 @@ public class UserRestController {
 
     @PostMapping("/registrationTravel")
     @PreAuthorize("hasAuthority('developers:read')")
-    public void likes(@RequestParam("id") String postId) {
+    //Регистрация нового путешествия при клике на БАЙ
+    public void registrationTravel(@RequestParam("id") String postId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             userFacade.travelRegistration(Long.parseLong(postId), authentication.getName());

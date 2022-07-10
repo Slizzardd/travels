@@ -22,7 +22,6 @@ public class BaseUser extends BaseEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Post> posts;
 
-
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
     })
@@ -58,9 +57,10 @@ public class BaseUser extends BaseEntity {
         super();
         this.enabled = true;
         this.travelsUser = new HashSet<>();
-        this.role = Role.ADMIN;
+        this.posts = new HashSet<>();
     }
 
+//    Добавление путешествия(при нажатии на buy
     public void addTravel(Post post) {
         this.travelsUser.add(post);
         post.getTravelsPost().add(this);

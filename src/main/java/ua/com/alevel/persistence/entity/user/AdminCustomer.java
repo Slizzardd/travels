@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 public class AdminCustomer extends BaseUser {
 
     public AdminCustomer() {
-        super();
-        setRole(Role.ADMIN);
+        super();//Вызывается конструктор класса, от которого наследуется это класс, в данном случае BaseUser
+        setRole(Role.ADMIN); //Задается роль админа
     }
 }

@@ -27,6 +27,7 @@ public class MainController {
     }
 
     @RequestMapping
+    //Главная страница
     public String mainPage(Model model, WebRequest request) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         PageData<PostResponseDto> postResponseDtoPageData = postFacade.findAll(request);

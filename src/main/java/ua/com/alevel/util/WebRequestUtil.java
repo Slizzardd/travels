@@ -9,6 +9,7 @@ import java.util.Objects;
 
 public final class WebRequestUtil {
 
+    //Тут я сам еле как обьясню, просто не знаю как вам это обьяснить, считайте что утил класс дл генерации запроса для findAll
     private static final String SIZE_PARAM = "size";
     private static final String SORT_PARAM = "sort";
     private static final String ORDER_PARAM = "order";

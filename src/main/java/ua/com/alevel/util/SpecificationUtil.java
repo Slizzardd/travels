@@ -21,6 +21,7 @@ public final class SpecificationUtil {
     private SpecificationUtil() {
     }
 
+    //Нахуй не надо
     public static <E extends BaseEntity> List<Predicate> generateSpecificationPredicates(
             DataTableRequest request,
             Class<E> entityClass,

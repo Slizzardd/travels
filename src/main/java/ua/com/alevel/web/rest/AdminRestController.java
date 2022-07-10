@@ -27,6 +27,7 @@ public class AdminRestController {
 
     @PostMapping(path = "/addPost", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasAuthority('developers:write')")
+    //Загрузка фото
     public String uploadPhoto(@ModelAttribute PostRequestDto req) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {

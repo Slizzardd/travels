@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 public class UserCustomer extends BaseUser {
 
     public UserCustomer() {
-        super();
-        setRole(Role.USER);
+        super();//Вызывается конструктор класса, от которого наследуется это класс, в данном случае BaseUser
+        setRole(Role.USER); //Задается роль пользователя
     }
 }

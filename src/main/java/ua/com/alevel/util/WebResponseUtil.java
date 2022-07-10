@@ -5,10 +5,12 @@ import ua.com.alevel.persistence.entity.BaseEntity;
 import ua.com.alevel.web.dto.response.PageData;
 import ua.com.alevel.web.dto.response.ResponseDto;
 
-public final class WebResponseUtil {
+    public final class WebResponseUtil {
 
     private WebResponseUtil() {
     }
+
+        //Генерация класса для ответа в UI
 
     public static PageData<? extends ResponseDto> initPageData(
             DataTableResponse<? extends BaseEntity> tableResponse) {

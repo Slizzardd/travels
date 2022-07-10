@@ -25,36 +25,42 @@ public class PostServiceImpl implements PostService {
         this.crudRepositoryHelper = crudRepositoryHelper;
     }
 
-
+//Получение уже заполненного поста и занос его в БД
     @Override
     public void create(Post post) {
         crudRepositoryHelper.create(postRepository, post);
     }
+
+    //Получение уже заполненного поста и обновление его в БД
 
     @Override
     public void update(Post post) {
         crudRepositoryHelper.update(postRepository, post);
     }
 
+//    Получение ИД поста и удаление его из БД
     @Override
     public void delete(Long id) {
         crudRepositoryHelper.delete(postRepository, id);
     }
 
+//    Поиск поста по id
     @Override
     public Optional<Post> findById(Long id) {
         return crudRepositoryHelper.findById(postRepository, id);
     }
 
+//    Поиск всех постов
     @Override
     public DataTableResponse<Post> findAll(DataTableRequest request) {
         DataTableResponse<Post> dataTableResponse = responseFill(request);
-
+//Получение всех постов и фильтрация тех, где visible правдиво
         dataTableResponse.getItems().stream().filter(Post::getVisible).collect(Collectors.toList());
 
         return dataTableResponse;
     }
 
+//    Получение id последнего добавленного поста
     @Override
     public Long getLastIndex() {
         Long id;
@@ -66,18 +72,21 @@ public class PostServiceImpl implements PostService {
         }
     }
 
+    //Это для спецификаций, оно вам не надо
     @Override
     public List<Post> search(Map<String, String[]> queryMap) {
         String[] searchImage = queryMap.get("name");
         return postRepository.findByNamePostContaining(searchImage[0]);
     }
 
+    //Тоже самое, что и findAll, только без фильтрации по visible
     @Override
     public DataTableResponse<Post> findAllForAdmin(DataTableRequest request) {
         DataTableResponse<Post> dataTableResponse = responseFill(request);
         return dataTableResponse;
     }
 
+    //Ну эта функция для findAll, чтоб не писать 1 и тот же код 2 раза
     private DataTableResponse<Post> responseFill(DataTableRequest request) {
         if (MapUtils.isNotEmpty(request.getRequestParamMap())) {
             return crudRepositoryHelper.findAll(postRepository, request, Post.class);

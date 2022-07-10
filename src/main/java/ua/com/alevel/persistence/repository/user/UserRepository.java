@@ -14,6 +14,4 @@ public interface UserRepository extends BaseRepository<BaseUser> {
     boolean existsByEmail(String email);
 
     boolean existsByLogin(String login);
-
-    BaseUser findTopByOrderByIdDesc();
 }

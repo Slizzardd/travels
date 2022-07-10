@@ -31,7 +31,7 @@ public class PostFacadeImpl implements PostFacade {
         this.userService = userService;
     }
 
-    @Override
+    @Override//Преобразование PostRequestDto в Post. Просто одни поля в другие и добавление фотки в файл
     public void create(PostRequestDto postRequestDto) {
         try {
             BaseUser user = userService.findByEmail(postRequestDto.getEmailUser());
@@ -52,7 +52,7 @@ public class PostFacadeImpl implements PostFacade {
 
     @Override
     public void update(Long id, PostRequestDto postRequestDto) {
-
+//  Не добавлял фичу обновления пользователя, у меня тож нет
     }
 
     @Override
@@ -60,15 +60,16 @@ public class PostFacadeImpl implements PostFacade {
         postService.delete(id);
     }
 
-    @Override
+    @Override//Поиск по id поста.
     public PostResponseDto findById(Long id) {
         Post post = postService.findById(id).orElse(null);
         assert post != null;
+        //Из полного пути делает путь для UI
         post.setImagePath(post.getImagePath().replaceAll("C:/D/codes/travels_site/src/main/resources/static", ""));
         return new PostResponseDto(post);
     }
 
-    @Override
+    @Override//Поиск всех постов
     public PageData<PostResponseDto> findAll(WebRequest webRequest) {
         DataTableRequest dataTableRequest = WebRequestUtil.initDataTableRequest(webRequest);
         DataTableResponse<Post> tableResponse;
@@ -84,7 +85,7 @@ public class PostFacadeImpl implements PostFacade {
         return pageData;
     }
 
-    @Override
+    @Override //Не реализовал нигде
     public PageData<PostResponseDto> search(WebRequest webRequest, String userEmail) {
         return null;
     }
